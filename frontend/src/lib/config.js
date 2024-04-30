@@ -1,5 +1,5 @@
 const backendBaseUrl =
-  process.env.VERCEL_ENV === "production"
+  process.env.REACT_APP_VERCEL_ENV === "production"
     ? "https://riget-zoo-adventures.onrender.com/api/v1"
     : "http://localhost:8000/api/v1";
 
