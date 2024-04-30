@@ -1,0 +1,121 @@
+[
+  {
+    "id": "13c8cfd0-c905-44a0-9c31-fb7206e69d0f",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Jungle Cabin",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": false,
+    "img_src": "/jungle-cabin.jpg",
+    "img_alt": "An exotic room with a bed and some palm trees"
+  },
+  {
+    "id": "121d8018-878a-4894-bc9c-3cf73dbd6b36",
+    "room_number": 2,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Jungle Cabin",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/jungle-cabin.jpg",
+    "img_alt": "An exotic room with a bed and some palm trees"
+  },
+  {
+    "id": "ae7f6c67-8461-400c-91ab-164a1f9fd1d7",
+    "room_number": 3,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Jungle Cabin",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/jungle-cabin.jpg",
+    "img_alt": "An exotic room with a bed and some palm trees"
+  },
+  {
+    "id": "c6b85693-f3e7-439b-b56c-ccfcfc22f7ac",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Desert Cave",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/desert-cave.jpg",
+    "img_alt": "An exotic room with a bed and some palm trees"
+  },
+  {
+    "id": "95667e52-e5eb-4935-8d4b-4100ed3a2d9a",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Desert Cave",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": false,
+    "img_src": "/desert-cave.jpg",
+    "img_alt": "A bath tub in a environemnt reminiscent of a desert"
+  },
+  {
+    "id": "d93ac8e6-1e76-477b-aca6-038a4364f037",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Desert Cave",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/desert-cave.jpg",
+    "img_alt": "A bath tub in a environemnt reminiscent of a desert"
+  },
+  {
+    "id": "b955a9e7-b0a7-41c0-9a8a-5f8253af7629",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Snowy Igloo",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/snowy-igloo.jpg",
+    "img_alt": "A person holding a warm beverage outlooking a wintery view"
+  },
+  {
+    "id": "ad914da4-211f-40aa-b069-1ba6c1289239",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Snowy Igloo",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": false,
+    "img_src": "/snowy-igloo.jpg",
+    "img_alt": "A person holding a warm beverage outlooking a wintery view"
+  },
+  {
+    "id": "c1410ac8-5f0e-42ed-a8d2-789c749399b3",
+    "room_number": 1,
+    "dates_booked": [],
+    "price_per_night": "20.00",
+    "type": "Snowy Igloo",
+    "description": "A beautiful 2 bedroom suite with an exotic atmosphere",
+    "num_beds": 2,
+    "free_wifi": true,
+    "img_src": "/snowy-igloo.jpg",
+    "img_alt": "A person holding a warm beverage outlooking a wintery view"
+  },
+  {
+    "id": "ccf7e878-0df6-40d8-85ea-57462ef5f6c1",
+    "user_id": "",
+    "type": "zoo",
+    "guest": true,
+    "date": "2024-05-25",
+    "num_people": 2,
+    "email": "testemail@gmail.com",
+    "duration": "2024-04-25T10:21:28.006Z-2024-05-15T10:21:28.006Z",
+    "hotel_room_id": "13c8cfd0-c905-44a0-9c31-fb7206e69d0f"
+  }
+]
