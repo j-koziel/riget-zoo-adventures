@@ -9,7 +9,7 @@ app = FastAPI()
 origins = [
     "http://localhost",
     "http://localhost:3000",
-    "https://https://riget-zoo-adventures.vercel.app"
+    "https://riget-zoo-adventures.vercel.app"
 ]
 
 # CORS middleware to ensure that the frontend can make requests to the backend
