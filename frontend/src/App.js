@@ -13,7 +13,7 @@ import { Toaster } from "./components/ui/sonner";
 import { HotelRooms } from "./pages/hotel-rooms";
 import { InteractiveExperience } from "./pages/interactive-experience";
 import { Articles } from "./pages/articles";
-import {Article} from "./pages/article"
+import { Article } from "./pages/article";
 import { Quizzes } from "./pages/quizzes";
 
 function App() {

@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from typing import Annotated
 import os
+import uuid
 
 from fastapi import APIRouter, Depends, HTTPException, status
 
@@ -61,6 +62,7 @@ async def create_new_user(new_user: User) -> Token:
     hashed_password = get_password_hash(user_dict["password"])
 
     user_dict["password_hash"] = hashed_password
+    user_dict["id"] = str(uuid.uuid4())
 
     del user_dict["password"]
     del user_dict["password_confirm"]
@@ -74,7 +76,7 @@ async def create_new_user(new_user: User) -> Token:
 
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": new_user.id}, expires_delta=access_token_expires
+        data={"sub": valid_user.id}, expires_delta=access_token_expires
     )
     return Token(access_token=access_token, token_type="bearer")
 

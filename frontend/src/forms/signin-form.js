@@ -24,7 +24,7 @@ export function SignInForm() {
 
   return (
     <form
-      className="flex flex-col items-center justify-center gap-y-4 p-10"
+      className="flex flex-col items-center justify-center gap-y-4 p-16"
       onSubmit={handleSignInSubmit}
     >
       <h1

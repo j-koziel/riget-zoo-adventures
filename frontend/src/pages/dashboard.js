@@ -243,19 +243,23 @@ export function Dashboard() {
               <span className="text-5xl md:text-7xl lg:text-9xl font-bold">
                 {user.upcoming_bookings.length}
               </span>
-              <span className="text-xl md:text-2xl lg:text-3xl">Zoo vists</span>
+              <span className="text-xl md:text-2xl lg:text-3xl">
+                Zoo Visits
+              </span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-5xl md:text-7xl lg:text-9xl font-bold">
                 {user.hotel_stays}
               </span>
-              <span className="text-xl">Hotel stays</span>
+              <span className="text-xl md:text-2xl lg:text-3xl">
+                Hotel Stays
+              </span>
             </div>
             <div className="flex flex-col items-center">
               <span className="text-5xl md:text-7xl lg:text-9xl font-bold">
                 {user.num_articles_read}
               </span>
-              <span className="text-xl">
+              <span className="text-xl md:text-2xl lg:text-3xl">
                 {user.num_articles_read !== 1 ? "Articles" : "Article"} read
               </span>
             </div>

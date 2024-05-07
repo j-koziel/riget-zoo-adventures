@@ -6,6 +6,7 @@ import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { useAuth } from "../contexts/auth-provider";
 import { toast } from "sonner";
+import { Checkbox } from "../components/ui/checkbox";
 
 /**
  *  This is the form which users will use to create new accounts
@@ -18,6 +19,7 @@ export function RegisterForm() {
   const [password, setPassword] = React.useState("");
   const [passwordConfirm, setPasswordConfirm] = React.useState("");
   const [date, setDate] = React.useState();
+  const [termsAccepted, setTermsAccepted] = React.useState(false);
 
   const { register } = useAuth();
 
@@ -27,6 +29,11 @@ export function RegisterForm() {
 
       if (password !== passwordConfirm) {
         toast.error("Your passwords should match");
+        return;
+      }
+
+      if (!termsAccepted) {
+        toast.error("Please accept the terms and conditions");
         return;
       }
 
@@ -44,7 +51,7 @@ export function RegisterForm() {
 
   return (
     <form
-      className="flex flex-col items-center justify-center gap-y-4 p-10"
+      className="flex flex-col items-center justify-center gap-y-4 p-16"
       onSubmit={handleRegisterSubmit}
     >
       <h1
@@ -103,7 +110,7 @@ export function RegisterForm() {
           onChange={(e) => setPasswordConfirm(e.target.value)}
         />
       </div>
-      <div className="flex flex-col gap-y-1">
+      <div className="">
         <Label htmlFor="dob">Date of Birth</Label>
         <Input
           type="date"
@@ -112,6 +119,19 @@ export function RegisterForm() {
           value={date}
           onChange={(e) => setDate(e.target.value)}
         />
+      </div>
+      <div className="flex items-center gap-x-1">
+        <Checkbox
+          id="terms"
+          checked={termsAccepted}
+          onCheckedChange={(e) => setTermsAccepted(e)}
+        />
+        <label htmlFor="terms">
+          Accept{" "}
+          <a href="/tncs" className="transition-colors hover:text-primary">
+            Terms and Conditions
+          </a>
+        </label>
       </div>
 
       <Button

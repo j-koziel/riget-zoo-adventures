@@ -41,7 +41,6 @@ def authenticate_user(email: str, password: str) -> bool | UserInDb:
     user = get_user(email=email)
 
     if not user:
-        print("hello???")
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="That user does not exist, please create an account")
     
     if not verify_password(password, user.password_hash):

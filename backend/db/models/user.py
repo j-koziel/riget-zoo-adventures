@@ -7,7 +7,7 @@ from pydantic import BaseModel
 from db.models.booking import Booking, HotelBooking
 
 class User(BaseModel):
-    id: str = str(uuid.uuid4())
+    id: str = ""
     disabled: bool = False
     type: Literal["free", "member"] = "free"
     name: str
