@@ -6,8 +6,8 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from backend.api.users.services import read_all_users
-from backend.dependencies.dp import get_db
+from api.users.services import read_all_users
+from dependencies.db import get_db
 from config import ACCESS_TOKEN_EXPIRE_MINUTES
 from db.models.user import User, UserInDb
 from db.models.token import Token

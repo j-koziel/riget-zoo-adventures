@@ -9,14 +9,16 @@ from db.db import Base
 
 
 class BookingModel(Base):
-    id: str = str(uuid.uuid4())
+    __tablename__ = "previous_bookings"
+
+    id: Mapped[int] = mapped_column(primary_key=True)
     user = relationship("UserModel", back_populates="previous_bookings")
-    type: Literal["hotel", "zoo"]
-    guest: bool
-    date: str
-    num_people: int
-    email: str = ""
-    total_cost: str
+    type: Mapped[Literal["hotel", "zoo"]]
+    guest: Mapped[bool]
+    date: Mapped[str]
+    num_people: Mapped[int]
+    email: Mapped[str] = mapped_column("")
+    total_cost: Mapped[str]
 
 class Booking(BaseModel):
     id: str = str(uuid.uuid4())
