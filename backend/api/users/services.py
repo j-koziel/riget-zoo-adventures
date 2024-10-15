@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 
 from db.models.user import UserModel
 from api.users.dtos import UserCreate, User
@@ -21,6 +22,12 @@ def read_all_users(db: Session, skip: int = 0, limit: int = 100):
 
 
 def create_user(db: Session, user: UserCreate) -> User:
+  if len(user.password) < 8:
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Your password is too short")
+    
+  if (user.password != user.password_confirm):
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Your passwords need to match")
+
   hashed_password = pwd_context.hash(user.password)
   db_user = UserModel(email=user.email, password_hash=hashed_password, name=user.name, dob=user.dob)
 

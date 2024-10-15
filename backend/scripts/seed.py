@@ -3,7 +3,7 @@ from datetime import datetime
 from faker import Faker
 
 from db.models.user import UserModel
-from utils.auth import get_password_hash
+from api.auth.services import get_password_hash
 from db.db import SessionLocal
 
 fake = Faker()
@@ -13,7 +13,7 @@ def seed_users():
   
 
   for i in range(0, 10):
-    users_data.append(UserModel(name=fake.name(), email=fake.email(), password_hash=get_password_hash("testpass123"), dob=fake.date_of_birth(minimum_age=18), upcoming_bookings=fake.get_words_list(), date_created=datetime.now()))
+    users_data.append(UserModel(name=fake.name(), email=fake.email(), password_hash=get_password_hash("testpass123"), dob=fake.date_of_birth(minimum_age=18), date_created=datetime.now()))
 
   try:
     db = SessionLocal()

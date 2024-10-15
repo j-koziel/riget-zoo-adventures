@@ -2,6 +2,9 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.users.views import user_router
+# from api.booking.views import booking_router
+# from api.article.views import article_router
+# from api.auth.views import auth_router
 from db.db import Base, engine
 
 Base.metadata.create_all(engine)
@@ -25,6 +28,6 @@ app.add_middleware(
 )
 
 app.include_router(user_router)
-# app.include_router(auth.router)
-# app.include_router(booking.router)
-# app.include_router(article.router)
+# app.include_router(booking_router)
+# app.include_router(article_router)
+# app.include_router(auth_router)
