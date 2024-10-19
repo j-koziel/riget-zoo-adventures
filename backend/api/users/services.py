@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, status
 
+from api.auth.utils import decode_access_token
 from db.models.user import UserModel
 from api.users.dtos import UserCreate, User
 from config import pwd_context
@@ -35,17 +36,14 @@ def create_user(db: Session, user: UserCreate) -> User:
   db.commit()
   db.refresh(db_user)
 
-  # Create a dictionary with the required fields
-  user_dict = {key: value for key, value in db_user.__dict__.items() if key in [
-    "id",
-    "disabled",
-    "name",
-    "email",
-    "password_hash",
-    "dob",
-    "previous_bookings",
-    "upcoming_bookings",
-    "membership_duration",
-    "next_payment_date"
-]}
-  return User(**user_dict)
+  return db_user.id
+
+
+def update_user_type(db: Session, current_user: UserModel, member: bool):
+  if current_user:
+    current_user.type = "member" if member else "free"
+    db.commit()
+    db.refresh(current_user)
+    return current_user
+  return None
+

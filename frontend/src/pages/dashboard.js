@@ -153,7 +153,7 @@ export function Dashboard() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-y-2 h-[400px] overflow-y-scroll">
-            {user.upcoming_bookings.map((booking, i) => {
+            {/* {user.upcoming_bookings.map((booking, i) => {
               if (booking.type === "hotel") {
                 return (
                   <Card key={i} className="flex items-center">
@@ -230,7 +230,7 @@ export function Dashboard() {
               }
 
               return "what";
-            })}
+            })} */}
           </CardContent>
         </Card>
         <Card className="bg-background">
@@ -241,7 +241,7 @@ export function Dashboard() {
           <CardContent className="flex items-center justify-evenly">
             <div className="flex flex-col items-center">
               <span className="text-5xl md:text-7xl lg:text-9xl font-bold">
-                {user.upcoming_bookings.length}
+                {/* {user.upcoming_bookings.length} */}
               </span>
               <span className="text-xl md:text-2xl lg:text-3xl">
                 Zoo Visits
