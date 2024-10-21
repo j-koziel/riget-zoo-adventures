@@ -1,15 +1,15 @@
 from datetime import datetime, timedelta
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Request, status
 from sqlalchemy.orm import Session
 
-from api.users.services import create_user, read_all_users, update_user_type
+from api.users.services import create_user, get_user_by_email, read_all_users, update_user_type
 from dependencies.db import get_db
 from config import ACCESS_TOKEN_EXPIRE_MINUTES
 from api.auth.dtos import Token
 from api.users.dtos import StatusUpdateResponse, UserCreate, UserPublic
-from api.auth.services import create_access_token, get_current_active_user
+from api.auth.services import create_access_token, get_current_active_user, send_verification_email
 
 user_router = APIRouter(prefix="/api/v1/users", tags=["users"])
 
@@ -25,8 +25,8 @@ async def get_all_users(db: Session = Depends(get_db)) -> list[UserPublic]:
     """
     return read_all_users(db)
 
-@user_router.post("/", response_model=Token)
-async def create_new_user(new_user: UserCreate, db: Session = Depends(get_db)) -> Token:
+@user_router.post("/")
+async def create_new_user(new_user: UserCreate, request: Request, db: Session = Depends(get_db)):
     """Takes in a candidate user, validates it, adds to the database and returns an access token
 
     Args:
@@ -43,14 +43,20 @@ async def create_new_user(new_user: UserCreate, db: Session = Depends(get_db)) -
     # 6570 days is exactly 18 years
     if ((datetime.now() - validated_dob).days < 6570):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You need to be 18 years of age to create an account")
+    
+    potential_existing_user = get_user_by_email(db, email=new_user.email)
+    if potential_existing_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="This user already exists")
 
-    new_user_id = create_user(db, new_user)
 
+    # This endpoint should not be returning an access token... instead send an email with a verification code
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(
-        data={"sub": f"{new_user_id}"}, expires_delta=access_token_expires
+        data={"sub": f"{new_user.email}"}, expires_delta=access_token_expires
     )
-    return Token(access_token=access_token, token_type="bearer")
+    await send_verification_email(new_user.email, request.base_url._url, access_token)
+    new_user_id = create_user(db, new_user)
+    return {"new_user_id": new_user_id}
 
 
 @user_router.get("/me", response_model=UserPublic)

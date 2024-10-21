@@ -47,3 +47,9 @@ def update_user_type(db: Session, current_user: UserModel, member: bool):
     return current_user
   return None
 
+
+def set_user_verified(db: Session, email: str, value: bool) -> None:
+  user = get_user_by_email(db, email)
+  user.verified = value
+  db.commit()
+  db.refresh(user)

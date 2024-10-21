@@ -13,6 +13,7 @@ class UserModel(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     disabled: Mapped[bool] = mapped_column(default=False)
     type: Mapped[Literal["free", "member"]] = mapped_column(default="free")
+    verified: Mapped[bool] = mapped_column(default=False)
     name: Mapped[str]
     email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str]
