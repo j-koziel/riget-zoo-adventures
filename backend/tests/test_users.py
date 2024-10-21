@@ -40,16 +40,16 @@ def test_create_user_password_mismatch(client):
   assert res.status_code == 400
 
 
-# def test_create_user_email_already_exists(client):
-#   res = client.post("/api/v1/users", json={
-#     "email": "test@test.com",
-#     "password": "test1234",
-#     "password_confirm": "test1234",
-#     "name": "test",
-#     "dob": "2000-01-01"
-#   })
-#
-#   assert res.status_code == 400
+def test_create_user_email_already_exists(client):
+  res = client.post("/api/v1/users", json={
+    "email": "test@test.com",
+    "password": "test1234",
+    "password_confirm": "test1234",
+    "name": "test",
+    "dob": "2000-01-01"
+  })
+
+  assert res.status_code == 400
 
 
 def test_user_too_young(client):
@@ -63,8 +63,11 @@ def test_user_too_young(client):
 
   assert res.status_code == 400
 
-# def test_get_current_active_user(client):
-#   res = client.get("/api/v1/users/me")
 
-#   assert res.status_code == 200
+def test_get_current_active_user(client, user):
+  access_token = client.post("/api/v1/auth/token", data={"username": user.email, "password": "testpass123"}, headers={"Content-Type": "application/x-www-form-urlencoded"}).json()["access_token"]
+  
+  res = client.get("/api/v1/users/me", headers={"Authorization": f"Bearer {access_token}"})
+
+  assert res.status_code == 200
 
