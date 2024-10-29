@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from pydantic import BaseModel
 
 class ZooTicket(BaseModel):
@@ -5,3 +7,13 @@ class ZooTicket(BaseModel):
     num_tickets: int = 0
     date: str
     is_available: bool = True
+
+
+class ZooTicketCreate(BaseModel):
+    date: str
+    num_guests: int
+    user_id: int | None
+
+
+class DayCreate(BaseModel):
+    date: datetime

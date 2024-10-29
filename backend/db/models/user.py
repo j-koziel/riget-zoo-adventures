@@ -2,9 +2,10 @@
 from typing import Literal
 from datetime import datetime, timedelta
 
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from db.db import Base
+from db.models.zoo_ticket import ZooTicketModel
 
 
 class UserModel(Base):
@@ -32,3 +33,5 @@ class UserModel(Base):
     points_spent: Mapped[int] = mapped_column(nullable=True)
     num_quizzes_completed: Mapped[int] = mapped_column(nullable=True)
     # quizzes_completed: Mapped[List] = mapped_column(default=[])
+
+    zoo_tickets = relationship("ZooTicketModel", back_populates="user", lazy="joined")

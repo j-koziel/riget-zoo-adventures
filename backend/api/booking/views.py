@@ -1,15 +1,18 @@
-# from datetime import datetime, timedelta
-# import os
-# from fastapi import APIRouter, HTTPException, status
+from datetime import datetime, timedelta
+from typing import Annotated
+
+from fastapi import APIRouter, HTTPException, Depends, Request, status
+from sqlalchemy.orm import Session
 
 # from db.models.hotel_room import HotelRoom
-# from db.models.booking import Booking, HotelBooking
-# from utils.db import read_db, write_db
-# from utils.user import update_user_bookings
+from api.auth.utils import decode_access_token
+from api.booking.services import create_zoo_ticket, get_all_zoo_tickets
+from api.auth.services import oauth2_scheme
 
-# from api.booking.dtos import ZooTicket
+from api.booking.dtos import ZooTicket, ZooTicketCreate
+from dependencies.db import get_db
 
-# booking_router = APIRouter(prefix="/api/v1/booking", tags=["booking"])
+booking_router = APIRouter(prefix="/api/v1/booking", tags=["booking"])
 
 # @booking_router.get("/zoo-tickets/availability", tags=["zoo tickets"], response_model=ZooTicket)
 # async def get_ticket_availability_for_date(date: str):
@@ -28,42 +31,25 @@
 #     else:
 #         return zoo_ticket_db[date]
     
-# @booking_router.post("/zoo-tickets/book", tags=["zoo tickets"], response_model=Booking)
-# async def book_zoo_ticket(booking_payload: Booking):
-#     ticket_bookings_db = read_db(f"{os.getcwd()}/db/ticket-bookings.json", Booking)
-#     zoo_ticket_db = read_db(f"{os.getcwd()}/db/tickets.json", ZooTicket)
-
-#     if booking_payload.num_people > 50:
-#             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You can not book for that many people.")
-
-#     if booking_payload.date not in zoo_ticket_db:
-#         zoo_ticket_db[booking_payload.date] = ZooTicket(date=booking_payload.date, num_tickets=100 - booking_payload.num_people)
-#         write_db(f"{os.getcwd()}/db/tickets.json", zoo_ticket_db)
-        
-#         ticket_bookings_db.append(booking_payload)
-#         write_db(f"{os.getcwd()}/db/ticket-bookings.json", ticket_bookings_db)
-
-#         if (not booking_payload.guest):
-#             return update_user_bookings(booking_payload)
-        
-#         return booking_payload
-        
+@booking_router.post("/zoo-tickets/book")
+async def book_zoo_ticket(new_ticket: ZooTicketCreate, request: Request, db: Session = Depends(get_db)):
+    if request.headers.get("Authorization"):
+        access_token = request.headers.get("Authorization").split(" ")[1]
+        user_id = decode_access_token(access_token)["sub"]
+        new_ticket.user_id = user_id
     
-#     if booking_payload.date in zoo_ticket_db:
-#         if zoo_ticket_db[booking_payload.date].is_available:
-#             if (zoo_ticket_db[booking_payload.date].num_tickets - booking_payload.num_people) < 0:
-#                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="There are not enough tickets :(")
-            
-#             zoo_ticket_db[booking_payload.date].num_tickets = zoo_ticket_db[booking_payload.date].num_tickets - booking_payload.num_people
-#             write_db(f"{os.getcwd()}/db/tickets.json", zoo_ticket_db)
+    # print("This is the access token")
+    # print(access_token)
+    # new_ticket.user_id = user_id
+    create_zoo_ticket(db, new_ticket)
 
-#             ticket_bookings_db.append(booking_payload)
-#             write_db(f"{os.getcwd()}/db/ticket-bookings.json", ticket_bookings_db)
+    return {"msg": "Ticket booked successfully"}
 
-#             if (not booking_payload.guest):
-#                 return update_user_bookings(booking_payload)
-            
-#             return booking_payload
+
+@booking_router.get("/zoo-tickets")
+async def all_zoo_tickets(db: Session = Depends(get_db)):
+    print(get_all_zoo_tickets(db))
+    return get_all_zoo_tickets(db)
 
 # @booking_router.get("/hotel/available-rooms", response_model=list[HotelRoom])
 # async def get_rooms() -> HotelRoom:

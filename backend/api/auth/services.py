@@ -64,8 +64,6 @@ def get_current_user(access_token: Annotated[str, Depends(oauth2_scheme)], db: S
   credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
   try:
     user_id: str | None = decode_access_token(access_token)["sub"]
-    print("This is the user id")
-    print(user_id)
 
     if user_id is None:
       raise credentials_exception
