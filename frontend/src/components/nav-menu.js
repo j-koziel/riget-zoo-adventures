@@ -1,4 +1,4 @@
-import { PawPrint } from "lucide-react";
+import { PawPrint, Sidebar } from "lucide-react";
 
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
@@ -7,6 +7,7 @@ import { TextSizeToggle } from "./text-size-toggle.js";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth-provider.js";
 import { PersonIcon } from "@radix-ui/react-icons";
+import { SidebarTrigger } from "./ui/sidebar.js";
 
 /**
  * A navigation menu so that people can navigate the site
@@ -40,7 +41,8 @@ export function NavMenu() {
           <span>Riget Zoo Adventures</span>
         </div>
         <div className="md:hidden flex items-center">
-          <HamburgerMenu links={links} />
+          <SidebarTrigger />
+          {/* <HamburgerMenu links={links} /> */}
         </div>
         <div
           className="md:hidden flex items-center gap-x-2 font-bold text-2xl cursor-pointer"

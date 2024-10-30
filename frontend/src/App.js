@@ -15,11 +15,14 @@ import { InteractiveExperience } from "./pages/interactive-experience";
 import { Articles } from "./pages/articles";
 import { Article } from "./pages/article";
 import { Quizzes } from "./pages/quizzes";
+import { AppSidebar } from "./components/app-sidebar";
+import { SidebarTrigger } from "./components/ui/sidebar";
 
 function App() {
   return (
     <div id="app-container">
       <NavMenu />
+      <AppSidebar />
       {/* All the pages of the website go here */}
       <Routes>
         <Route path="/" element={<Home />} />
@@ -41,6 +44,7 @@ function App() {
       </Routes>
       <Footer />
       <Toaster />
+      <SidebarTrigger />
     </div>
   );
 }
