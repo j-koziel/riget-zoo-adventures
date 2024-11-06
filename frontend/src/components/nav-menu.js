@@ -1,12 +1,11 @@
-import { PawPrint, Sidebar } from "lucide-react";
+import { PawPrint } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { PersonIcon } from "@radix-ui/react-icons";
 
 import { Button } from "./ui/button";
 import { ThemeToggle } from "./theme-toggle";
-import { HamburgerMenu } from "./hamburger-menu.js";
 import { TextSizeToggle } from "./text-size-toggle.js";
-import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/auth-provider.js";
-import { PersonIcon } from "@radix-ui/react-icons";
 import { SidebarTrigger } from "./ui/sidebar.js";
 
 /**
@@ -42,7 +41,6 @@ export function NavMenu() {
         </div>
         <div className="md:hidden flex items-center">
           <SidebarTrigger />
-          {/* <HamburgerMenu links={links} /> */}
         </div>
         <div
           className="md:hidden flex items-center gap-x-2 font-bold text-2xl cursor-pointer"
@@ -63,7 +61,7 @@ export function NavMenu() {
         </div>
         <div id="misc-links" className="flex items-center gap-x-2">
           {accessToken ? (
-            <div className="flex items-center gap-x-2">
+            <div className="hidden md:flex md:items-center md:gap-x-2">
               <Button size="icon" onClick={() => navigate("/dashboard")}>
                 <PersonIcon />
               </Button>
@@ -72,7 +70,7 @@ export function NavMenu() {
               </Button>
             </div>
           ) : (
-            <div className="flex items-center gap-x-2">
+            <div className="hidden md:flex md:items-center md:gap-x-2">
               <Button
                 onClick={() => {
                   navigate("/auth");
