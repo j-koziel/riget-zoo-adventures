@@ -2,13 +2,15 @@ import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import Cookies from "js-cookie";
+
 import { backendRoutes } from "../lib/config";
 
 const AuthContext = React.createContext();
 
 export function AuthProvider({ children }) {
   const [accessToken, setAccessToken] = React.useState(
-    localStorage.getItem("access_token") || ""
+    Cookies.get("access_token") || ""
   );
 
   const navigate = useNavigate();
@@ -47,7 +49,10 @@ export function AuthProvider({ children }) {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       });
 
-      localStorage.setItem("access_token", signInRes.data.access_token);
+      Cookies.set("access_token", signInRes.data.access_token, {
+        expires: 7,
+        secure: true,
+      });
       setAccessToken(signInRes.data.access_token);
       navigate("/dashboard");
       toast.success("You have successfully logged in");
@@ -65,7 +70,10 @@ export function AuthProvider({ children }) {
     try {
       const registerRes = await axios.post(backendRoutes.user.newUser, form);
 
-      localStorage.setItem("access_token", registerRes.data.access_token);
+      Cookies.set("access_token", registerRes.data.access_token, {
+        expires: 7,
+        secure: true,
+      });
       setAccessToken(registerRes.data.access_token);
       navigate("/dashboard");
       toast.success("You have successfully registered");
@@ -79,7 +87,7 @@ export function AuthProvider({ children }) {
    * @returns {void}
    */
   function logout() {
-    localStorage.removeItem("access_token");
+    Cookies.remove("access_token");
     setAccessToken("");
     navigate("/");
     toast.success("You have successfully logged out");

@@ -5,7 +5,11 @@ import { ZooMap } from "../components/zoo-map";
 
 export function Home() {
   // Array holding all the sections of the home page
-  const homeSections = [<LandingSection />, <AboutSection />, <ZooMap />];
+  const homeSections = [
+    <LandingSection key={0} />,
+    <AboutSection key={1} />,
+    <ZooMap key={2} />,
+  ];
 
   return (
     <div id="home-container">

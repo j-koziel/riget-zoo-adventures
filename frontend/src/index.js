@@ -3,12 +3,14 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { Providers } from "./providers";
+import { AppSidebar } from "./components/app-sidebar";
 import reportWebVitals from "./reportWebVitals";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Providers>
+      <AppSidebar />
       <App />
     </Providers>
   </React.StrictMode>

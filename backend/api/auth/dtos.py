@@ -6,3 +6,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: str | None = None
+
+
+class EmailVerificationResponse(BaseModel):
+  email: str
+  msg: str

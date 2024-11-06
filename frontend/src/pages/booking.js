@@ -23,6 +23,10 @@ export function Booking() {
   const navigate = useNavigate();
   const { type } = useParams();
 
+  React.useEffect(() => {
+    console.log(date);
+  }, [date]);
+
   const renderZooBooking = () => {
     if (type === "zoo") {
       return (
