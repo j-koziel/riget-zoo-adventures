@@ -7,7 +7,7 @@ import { SignInForm } from "../forms/signin-form";
  */
 export function Auth() {
   return (
-    <div className="min-h-screen flex items-center justify-center p-24">
+    <div className="flex items-center justify-center p-24">
       <div
         id="forms-container"
         className="min-w-screen flex flex-col mt-10 md:flex-row"

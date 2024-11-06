@@ -18,7 +18,7 @@ import { Quizzes } from "./pages/quizzes";
 
 function App() {
   return (
-    <div id="app-container">
+    <div id="app-container" className="w-screen">
       <NavMenu />
       {/* All the pages of the website go here */}
       <Routes>
