@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy.orm import Session
+from fastapi import HTTPException, status
 
 from db.models.day import DayModel
 from db.models.zoo_ticket import ZooTicketModel
@@ -16,14 +17,19 @@ def create_day(db: Session, day: DayCreate):
 
 def create_zoo_ticket(db: Session, ticket: ZooTicketCreate):
   ticket_date = datetime.strptime(ticket.date, "%Y-%m-%d")
-  day = db.query(DayModel).filter(DayModel.date == ticket_date).first()
+  today = datetime.now()
 
+  if ticket_date.date() <= today.date():
+    raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Please book a date later than today")
+
+
+  day = db.query(DayModel).filter(DayModel.date == ticket_date).first()
   if not day:
-    create_day(db, DayCreate(date=ticket_date, is_available=True))
+    create_day(db, DayCreate(date=ticket_date, is_available=True, num_tickets=1))
 
   day_id = db.query(DayModel).filter(DayModel.date == ticket_date).first().id
   
-  new_ticket = ZooTicketModel(day_id=day_id, user_id=ticket.user_id if ticket.user_id else None, num_guests=ticket.num_guests)
+  new_ticket = ZooTicketModel(day_id=day_id, user_id=ticket.user_id if ticket.user_id else None)
   db.add(new_ticket)
   db.commit()
   db.refresh(new_ticket)

@@ -11,9 +11,10 @@ class ZooTicket(BaseModel):
 
 class ZooTicketCreate(BaseModel):
     date: str
-    num_guests: int
     user_id: int | None
 
 
 class DayCreate(BaseModel):
     date: datetime
+    is_available: bool
+    num_tickets: int

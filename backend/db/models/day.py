@@ -11,3 +11,4 @@ class DayModel(Base):
   tickets = relationship("ZooTicketModel", back_populates="day", lazy="joined")
   date: Mapped[datetime] = mapped_column(unique=True)
   is_available: Mapped[bool] = mapped_column(default=True)
+  num_tickets: Mapped[int] = mapped_column(default=0)

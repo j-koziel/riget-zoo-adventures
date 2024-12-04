@@ -10,7 +10,7 @@ class ZooTicketModel(Base):
     id: Mapped[int] = mapped_column(primary_key=True)
     user_id = mapped_column(ForeignKey("users.id"), nullable=True)
     day_id = mapped_column(ForeignKey("days.id"))
-    num_guests: Mapped[int] = mapped_column(default=1)
+    
 
     day = relationship("DayModel", back_populates="tickets", lazy="joined")
     user = relationship("UserModel", back_populates="zoo_tickets", lazy="joined")

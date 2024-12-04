@@ -9,7 +9,7 @@ from jose import jwt, JWTError
 from fastapi_mail import FastMail, MessageSchema, ConnectionConfig
 
 from api.auth.utils import decode_access_token
-from api.common import exceptions
+from common import exceptions
 from config import ALGORITHM, SECRET_KEY, pwd_context
 from db.models.user import UserModel
 from api.users.services import get_user, get_user_by_email
