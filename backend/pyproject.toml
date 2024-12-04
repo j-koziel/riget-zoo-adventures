@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "backend"
+version = "0.1.0"
+description = "The backend for the Riget Zoo Adventures website"
+authors = ["j-koziel <jonathankoziel1@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.115.6"
+passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+sqlalchemy = "^2.0.36"
+faker = "^33.1.0"
+python-jose = "^3.3.0"
+psycopg2-binary = "^2.9.10"
+uvicorn = "^0.32.1"
+python-dotenv = "^1.0.1"
+psycopg2 = "^2.9.10"
+fastapi-mail = "^1.4.2"
+python-multipart = "^0.0.19"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
