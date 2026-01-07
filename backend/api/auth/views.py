@@ -1,7 +1,9 @@
 from datetime import timedelta
+import os
 from typing import Annotated
 
 from fastapi import APIRouter, Depends
+from fastapi.responses import RedirectResponse
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -38,4 +40,4 @@ async def very_email_with_access_token(token: str, db: Session = Depends(get_db)
 
   set_user_verified(db=db, email=email, value=True)
 
-  return EmailVerificationResponse(email=email, msg="Your email has been verified successfully")
+  return RedirectResponse(url=f"{os.getenv('FRONTEND_URL')}/dashboard")
