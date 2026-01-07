@@ -2,6 +2,7 @@ from datetime import timedelta, datetime, timezone
 import os
 from typing import Annotated
 
+import bcrypt
 from sqlalchemy.orm import Session
 from fastapi import HTTPException, Depends, status
 from fastapi.security import OAuth2PasswordBearer
@@ -28,11 +29,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Returns:
         bool: True for the password being verified and False for the password being incorrect
     """
-    return pwd_context.verify(plain_password, hashed_password)
+    return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
 
 
 def get_password_hash(password: str) -> str:
-    return pwd_context.hash(password)
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt()).decode("utf-8")
 
 
 def authenticate_user(email: str, password: str, db: Session) -> bool | UserModel:
@@ -103,7 +104,7 @@ async def send_verification_email(email: str, url: str, token: str):
   conf = ConnectionConfig(
    MAIL_USERNAME=os.getenv("EMAIL_SERVER_USERNAME"),
    MAIL_PASSWORD=os.getenv("EMAIL_SERVER_PASSWORD"),
-   MAIL_PORT=25,
+   MAIL_PORT=465,
    MAIL_SERVER="sandbox.smtp.mailtrap.io",
    MAIL_STARTTLS=True,
    MAIL_SSL_TLS=False,

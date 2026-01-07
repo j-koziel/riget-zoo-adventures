@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import OAuth2PasswordBearer
 
 from api.users.views import user_router
 from api.booking.views import booking_router
@@ -9,8 +8,6 @@ from api.auth.views import auth_router
 from db.db import Base, engine
 
 Base.metadata.create_all(engine)
-
-
 
 app = FastAPI()
 
