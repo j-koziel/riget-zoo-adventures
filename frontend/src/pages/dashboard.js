@@ -20,7 +20,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-  DialogClose,
 } from "../components/ui/dialog";
 import {
   AlertDialog,
@@ -52,6 +51,12 @@ export function Dashboard() {
     const getAndSetUserData = async () => {
       try {
         const user = await me();
+        if (!user.verified) {
+          setUser(user);
+          return toast.warning(
+            "Your email is not verified. Please verify your email to access all features."
+          );
+        }
         setUser(user);
       } catch (err) {
         if (!err.response) {
@@ -66,7 +71,7 @@ export function Dashboard() {
     getAndSetUserData();
   }, []);
 
-  return user ? (
+  return user && user.verified ? (
     <div className="mt-24 min-h-screen p-10">
       <h1 className="text-h1-sm md:text-h1-md lg:text-h1-lg font-bold mb-4">
         Welcome back, {user.name}
@@ -333,9 +338,17 @@ export function Dashboard() {
         </div>
       </div>
     </div>
-  ) : (
+  ) : !user ? (
     <div className="min-h-screen flex items-center justify-center">
       <ReloadIcon className="animate-spin" height={24} width={24} />
     </div>
-  );
+  ) : !user.verified ? (
+    <div className="min-h-screen flex flex-col items-center justify-center gap-y-4">
+      <h1 className="text-2xl font-bold">Email Not Verified</h1>
+      <p className="text-center max-w-md">
+        Your email address has not been verified. Please check your inbox for a
+        verification email.
+      </p>
+    </div>
+  ) : null;
 }

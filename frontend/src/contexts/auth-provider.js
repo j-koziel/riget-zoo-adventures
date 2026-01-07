@@ -68,14 +68,8 @@ export function AuthProvider({ children }) {
    */
   async function register(form) {
     try {
-      const registerRes = await axios.post(backendRoutes.user.newUser, form);
+      await axios.post(backendRoutes.user.newUser, form);
 
-      Cookies.set("access_token", registerRes.data.access_token, {
-        expires: 7,
-        secure: true,
-      });
-      setAccessToken(registerRes.data.access_token);
-      navigate("/dashboard");
       toast.success("You have successfully registered");
     } catch (err) {
       toast.error(err.response.data.detail);

@@ -1,11 +1,11 @@
 import React from "react";
 
-import { DatePicker } from "../components/ui/date-picker";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Label } from "../components/ui/label";
 import { useAuth } from "../contexts/auth-provider";
 import { toast } from "sonner";
+import { useNavigate } from "react-router-dom";
 import { Checkbox } from "../components/ui/checkbox";
 
 /**
@@ -21,7 +21,8 @@ export function RegisterForm() {
   const [date, setDate] = React.useState();
   const [termsAccepted, setTermsAccepted] = React.useState(false);
 
-  const { register } = useAuth();
+  const navigate = useNavigate();
+  const { register, signIn } = useAuth();
 
   const handleRegisterSubmit = async (e) => {
     try {
@@ -44,6 +45,10 @@ export function RegisterForm() {
         password_confirm: passwordConfirm,
         dob: date,
       });
+
+      await signIn({ username: email, password });
+
+      navigate("/dashboard");
     } catch (err) {
       toast.error("You have not been registered successfully");
     }

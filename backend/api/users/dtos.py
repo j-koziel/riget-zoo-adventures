@@ -33,6 +33,8 @@ class User(UserBase):
     num_quizzes_completed: int | None
     # quizzes_completed: list | None
     password_hash: str
+    verified: bool
+
 class UserPublic(UserBase):
     id: int
     disabled: bool
@@ -52,6 +54,7 @@ class UserPublic(UserBase):
     points_spent: int | None
     num_quizzes_completed: int | None
     # quizzes_completed: list = []
+    verified: bool
 
 
 class StatusUpdateResponse(BaseModel):

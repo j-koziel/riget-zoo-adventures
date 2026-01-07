@@ -15,6 +15,7 @@ import { InteractiveExperience } from "./pages/interactive-experience";
 import { Articles } from "./pages/articles";
 import { Article } from "./pages/article";
 import { Quizzes } from "./pages/quizzes";
+import { AccountVerification } from "./pages/account-verification";
 
 function App() {
   return (
@@ -24,6 +25,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />} />
+        <Route
+          path="/auth/account-verification"
+          element={<AccountVerification />}
+        />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/membership" element={<Membership />} />
         <Route path="/tncs" element={<TermsAndConditions />} />

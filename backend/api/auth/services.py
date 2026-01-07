@@ -64,12 +64,13 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None) -> s
 def get_current_user(access_token: Annotated[str, Depends(oauth2_scheme)], db: Session = Depends(get_db)):
   credentials_exception = HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Could not validate credentials", headers={"WWW-Authenticate": "Bearer"})
   try:
+    print("This is the access token:", access_token)
     user_id: str | None = decode_access_token(access_token)["sub"]
 
     if user_id is None:
       raise credentials_exception
   except JWTError as err:
-    print(err)
+    print("this error happened:", err)
     raise credentials_exception
   
   user = get_user(db, int(user_id))
@@ -120,7 +121,7 @@ async def send_verification_email(email: str, url: str, token: str):
           <body style="font-family: sans-serif;">
             <div style="display: block; margin: auto; max-width: 600px;" class="main">
               <h1 style="font-size: 18px; font-weight: bold; margin-top: 20px">Please verify your email</h1>
-              <p>Please click <a rel="noreferrer" target="_blank" href="{url}api/v1/auth/verify-email?token={token}">here</a> to verify your email so that you can start using your Darts Replay account</p>
+              <p>Please click <a rel="noreferrer" target="_blank" href="{url}api/v1/auth/verify-email?token={token}">here</a> to verify your email so that you can start using your Riget Zoo Adventures account</p>
               <p>Good luck! Hope it works.</p>
             </div>
           </body>
