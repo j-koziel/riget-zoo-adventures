@@ -38,7 +38,7 @@ export function ZooTickets() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [isBooked, setIsBooked] = React.useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
   const { me } = useAuth();
@@ -61,6 +61,10 @@ export function ZooTickets() {
 
         setAvailableTickets(areTicketsAvailableRes.data.num_tickets);
       } catch (err) {
+        if (err instanceof axios.AxiosError && err.response) {
+          toast.error(err.response.data.detail);
+          return;
+        }
         toast.error("An unexpected error has occurred");
       }
     };
