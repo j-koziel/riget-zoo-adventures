@@ -17,3 +17,5 @@ class ZooTicketCreate(BaseModel):
 
 class DayCreate(BaseModel):
     date: datetime
+    is_available: bool
+    num_tickets: int = 100

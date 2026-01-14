@@ -1,5 +1,4 @@
 from datetime import datetime, timedelta
-from typing import Annotated
 
 from fastapi import APIRouter, HTTPException, Depends, Request, status
 from sqlalchemy.orm import Session
@@ -7,29 +6,31 @@ from sqlalchemy.orm import Session
 # from db.models.hotel_room import HotelRoom
 from api.auth.utils import decode_access_token
 from api.booking.services import create_zoo_ticket, get_all_zoo_tickets
-from api.auth.services import oauth2_scheme
 
-from api.booking.dtos import ZooTicket, ZooTicketCreate
+from api.booking.dtos import DayCreate, ZooTicketCreate
+from db.models.day import DayModel
 from dependencies.db import get_db
 
 booking_router = APIRouter(prefix="/api/v1/booking", tags=["booking"])
 
-# @booking_router.get("/zoo-tickets/availability", tags=["zoo tickets"], response_model=ZooTicket)
-# async def get_ticket_availability_for_date(date: str):
-#     # Validate the date to ensure it is correct
-#     try:
-#         validated_date = datetime.strptime(date, "%Y-%m-%d")
+@booking_router.get("/zoo-tickets/availability", tags=["zoo tickets"],)
+async def get_ticket_availability_for_date(date: str, db: Session = Depends(get_db)):
+    # Validate the date to ensure it is correct
+    try:
+        validated_date = datetime.strptime(date, "%Y-%m-%d")
 
-#         if ((datetime.now() - validated_date) > timedelta(seconds=0)):
-#             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You can only pick dates which are after today")
+        if ((datetime.now() - validated_date) > timedelta(seconds=0)):
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="You can only pick dates which are after today")
 
-#     except ValueError:
-#         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="This date is invalid, please use the format YYYY-MM-DD")
+    except ValueError:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="This date is invalid, please use the format YYYY-MM-DD")
     
-#     if date not in zoo_ticket_db:
-#         return ZooTicket(date=date, num_tickets=100, is_available=True)
-#     else:
-#         return zoo_ticket_db[date]
+    result = db.query(DayModel).filter(DayModel.date == validated_date).first()
+    
+    if not result:                
+        return DayCreate(date=validated_date, is_available=True)
+    else:
+        return result
     
 @booking_router.post("/zoo-tickets/book")
 async def book_zoo_ticket(new_ticket: ZooTicketCreate, request: Request, db: Session = Depends(get_db)):
